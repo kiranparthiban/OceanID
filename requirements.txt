@@ -1,2 +1,4 @@
 django 
 django-cors-headers
+axios
+react-router-dom
