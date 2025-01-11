@@ -1,67 +1,71 @@
 import React, { useState } from "react";
 
-const Upload = ({ baseUrl }) => {
+const baseUrl = "http://127.0.0.1:8000/api"; // Backend base URL
+
+const Upload = ({ onSuccess }) => {
   const [file, setFile] = useState(null);
-  const [response, setResponse] = useState("");
-  const [status, setStatus] = useState("");
+  const [statusMessage, setStatusMessage] = useState("");
 
   const handleFileChange = (e) => {
-    setFile(e.target.files[0]);
+    const uploadedFile = e.target.files[0];
+    setFile(uploadedFile);
   };
 
-  const uploadImage = async () => {
+  const handleUpload = async () => {
     if (!file) {
-      alert("Please choose a file first.");
+      alert("Please select an image to upload.");
       return;
     }
-
-    setStatus("Uploading...");
-    setResponse("");
 
     const formData = new FormData();
     formData.append("image", file);
 
     try {
-      const res = await fetch(`${baseUrl}/upload/`, {
+      const response = await fetch(`${baseUrl}/upload/`, {
         method: "POST",
         body: formData,
       });
-      const result = await res.json();
 
-      if (res.ok) {
-        setStatus("Upload successful!");
-        setResponse(JSON.stringify(result, null, 2));
-      } else {
-        setStatus("Error occurred during upload.");
-        alert(`Error: ${result.error}`);
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
       }
+
+      const data = await response.json();
+      setStatusMessage(
+        `Uploaded successfully! Class: ${data.class_name}, Confidence: ${data.confidence}`
+      );
+      onSuccess(); // Notify App.jsx to refresh history
     } catch (error) {
-      setStatus("Error occurred during upload.");
-      alert(`Error: ${error.message}`);
+      console.error("Error uploading image:", error);
+      setStatusMessage("An error occurred while uploading the image.");
     }
   };
 
   return (
-    <div className="generate-image-container">
-      <div className="generated-image-box">
-        {file ? (
-          <img src={URL.createObjectURL(file)} alt="Selected" />
-        ) : (
-          <p className="placeholder-text">Choose an image to upload</p>
-        )}
+    <div className="main-content">
+      <div className="upload-container">
+        <div className="upload-preview">
+          {file ? (
+            <img
+              src={URL.createObjectURL(file)}
+              alt="Uploaded Preview"
+              className="uploaded-image"
+            />
+          ) : (
+            <p className="placeholder-text">Upload an image of a fish</p>
+          )}
+        </div>
+        <input
+          type="file"
+          accept="image/*"
+          onChange={handleFileChange}
+          className="file-input"
+        />
+        <button className="upload-button" onClick={handleUpload}>
+          Upload
+        </button>
+        {statusMessage && <p className="status-message">{statusMessage}</p>}
       </div>
-      <input
-        type="file"
-        accept="image/*"
-        onChange={handleFileChange}
-        className="prompt-bar"
-      />
-      <button onClick={uploadImage} className="generate-button">
-        Upload and Classify
-      </button>
-      {/* Status Message */}
-      {status && <div className="status-message">{status}</div>}
-      {response && <pre className="response-text">{response}</pre>}
     </div>
   );
 };

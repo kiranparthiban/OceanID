@@ -5,21 +5,26 @@
   box-sizing: border-box;
 }
 
-html, body, .app {
-  width: 100%;
+body,
+html,
+.app {
   height: 100%;
+  width: 100%;
   font-family: Arial, sans-serif;
   overflow: hidden;
+  background: url("/path/to/your/background-image.jpg") no-repeat center center
+    fixed;
+  box-sizing: border-box;
 }
 
-/* Background Animation */
+/* Animated Background */
 .animated-background {
   position: absolute;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  background: linear-gradient(-45deg, #1e3a8a, #2563eb, #1d4ed8, #3b82f6);
+  background: linear-gradient(-45deg, #ff9a9e, #fad0c4, #fbc2eb, #8fd3f4);
   background-size: 400% 400%;
   animation: gradientAnimation 15s ease infinite;
   z-index: -1;
@@ -37,104 +42,111 @@ html, body, .app {
   }
 }
 
-/* Top Bar */
-.top-bar {
-  position: fixed;
-  top: 0;
-  left: 0;
+/* Top Buttons */
+.top-buttons {
+  position: absolute;
+  top: 10px;
   width: 100%;
-  padding: 10px 20px;
   display: flex;
   justify-content: space-between;
-  align-items: center;
+  padding: 0 20px;
   z-index: 10;
-  background: rgba(0, 0, 0, 0.7);
 }
 
-.chat-history-toggle,
-.delete-history-toggle {
-  background-color: #007bff;
+.view-history-button,
+.delete-history-button {
+  background-color: rgba(0, 123, 255, 0.8);
   color: white;
   border: none;
   padding: 10px 15px;
   border-radius: 5px;
+  font-size: 14px;
   cursor: pointer;
-  transition: all 0.3s ease;
+  transition: all 0.3s ease, background-color 0.3s ease;
 }
 
-.chat-history-toggle:hover,
-.delete-history-toggle:hover {
-  background-color: #0056b3;
-  transform: scale(1.05);
+.view-history-button:hover,
+.delete-history-button:hover {
+  background-color: rgba(0, 123, 255, 1);
 }
 
-/* History Sidebar */
-.chat-history-panel {
+/* Sliding Sidebar */
+.history-sidebar {
   position: fixed;
   top: 0;
-  left: -300px; /* Hidden off-screen */
-  width: 300px;
+  left: -350px;
+  width: 350px;
   height: 100%;
-  background: rgba(0, 0, 0, 0.9);
+  background: rgba(0, 0, 0, 0.95);
+  box-shadow: 2px 0 10px rgba(0, 0, 0, 0.2);
   color: white;
   overflow-y: auto;
   transition: left 0.3s ease-in-out;
-  z-index: 15;
+  z-index: 100;
   padding: 20px;
 }
 
-.chat-history-panel.open {
-  left: 0; /* Slide in */
+.history-sidebar.open {
+  left: 0;
 }
 
-.close-chat-history {
+.close-sidebar-button {
   position: absolute;
   top: 10px;
   right: 10px;
   background: none;
   border: none;
-  color: white;
   font-size: 24px;
   cursor: pointer;
+  color: white;
 }
 
 /* History Items */
 .fetch-history-container {
+  padding: 10px;
   display: flex;
   flex-direction: column;
   gap: 15px;
 }
 
+
+.history-image {
+  width: 100%; /* Adjust size as needed */
+  height: 200px;
+  border-radius: 5px;
+  object-fit: cover;
+  margin-bottom: 5px;
+}
+.history-list {
+  display: flex;
+  flex-direction: column; /* Arrange items vertically */
+  gap: 15px; /* Space between boxes */
+}
+
 .history-item {
-  background: #222;
+  background: white;
+  color: black;
   border-radius: 8px;
   padding: 10px;
   display: flex;
-  align-items: center;
-  gap: 10px;
+  flex-direction: column;
+  gap: 4px;
   box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
 }
 
-.history-image {
-  width: 50px;
-  height: 50px;
+.history-item img {
+  width: 100%;
   border-radius: 5px;
+  height: auto;
   object-fit: cover;
+  max-height: 150px; /* Restrict height */
+  margin-bottom: 1px;
+
 }
 
-.history-info {
-  color: white;
-  font-size: 14px;
-}
-
-.history-info p {
+.history-item p {
   margin: 0;
-}
-
-.error-message {
-  color: red;
-  font-size: 14px;
-  margin-top: 10px;
+  font-size: 12px;
 }
 
 /* Main Content */
@@ -142,33 +154,48 @@ html, body, .app {
   display: flex;
   justify-content: center;
   align-items: center;
-  height: calc(100% - 50px); /* Full height minus the top bar */
+  height: 100%;
+  width: 100%;
   padding: 20px;
+  flex-direction: column;
+  margin-top: 0px;
+  margin-right: 1100px;
+  z-index: 5;
 }
 
 /* Upload Section */
-.generate-image-container {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 20px;
+.upload-container {
+  text-align: center;
+  background: rgba(255, 255, 255, 0.9);
+  padding: 22px;
+  padding-right: 15px ;
+  padding-left: 10px;
+  border-radius: 10px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+  margin: 0 auto;max-width: 400px;
 }
 
-.generated-image-box {
-  width: 300px;
-  height: 300px;
-  border: 2px dashed #ccc;
-  border-radius: 10px;
+.upload-preview {
+  width: 380px;
+  height: 380px;
+  border: 2px solid #444;
+  margin-bottom: 20px;
   display: flex;
   justify-content: center;
   align-items: center;
+  background-color: #fff;
+  border-radius: 10px;
   overflow: hidden;
-  background: white;
+
 }
 
-.generated-image-box img {
+.uploaded-image {
   max-width: 100%;
   max-height: 100%;
+  justify-content: center;
+  border-radius: 10px;
+  object-fit: cover;
+
 }
 
 .placeholder-text {
@@ -176,42 +203,38 @@ html, body, .app {
   font-size: 16px;
 }
 
-.prompt-bar {
-  width: 300px;
-  padding: 10px;
-  border-radius: 5px;
-  border: 1px solid #ccc;
+.file-input {
+  margin-bottom: 10px;
+  color: #444;
 }
 
-.generate-button {
-  background-color: #28a745;
+.upload-button {
+  padding: 10px 20px;
+  background-color: #4caf50;
   color: white;
   border: none;
-  padding: 10px 20px;
   border-radius: 5px;
   cursor: pointer;
-  transition: all 0.3s ease;
 }
 
-.generate-button:hover {
-  background-color: #218838;
-  transform: scale(1.05);
+.upload-button:hover {
+  background-color: #388e3c;
 }
 
 /* Delete History */
-.delete-history-container {
-  position: fixed;
-  top: 20%;
-  right: 10%;
+.delete-container {
+  position: absolute;
+  top: 50px;
+  right: 20px;
   background: rgba(0, 0, 0, 0.8);
   color: white;
   padding: 20px;
   border-radius: 5px;
   box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.3);
-  z-index: 20;
+  z-index: 15;
 }
 
-.delete-history-popup input {
+.delete-input {
   width: 100%;
   padding: 10px;
   margin-bottom: 10px;
@@ -220,10 +243,10 @@ html, body, .app {
 }
 
 .delete-button {
+  padding: 10px 15px;
   background-color: #dc3545;
   color: white;
   border: none;
-  padding: 10px 20px;
   border-radius: 5px;
   cursor: pointer;
   transition: all 0.3s ease;
@@ -231,22 +254,10 @@ html, body, .app {
 
 .delete-button:hover {
   background-color: #c82333;
-  transform: scale(1.05);
 }
 
-/* Status Message */
-.status-message {
-  margin-top: 10px;
-  font-size: 16px;
-  text-align: center;
-  font-weight: bold;
-}
 
-.response-text {
-  background: #f8f9fa;
-  padding: 10px;
-  border-radius: 5px;
-  max-width: 600px;
-  overflow: auto;
-  font-size: 14px;
-}
+
+
+
+
