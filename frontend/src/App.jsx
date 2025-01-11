@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import Upload from "./components/Upload";
 import History from "./components/History";
 import DeleteHistory from "./components/DeleteHistory";
+import OceanAnimation from "./components/OceanAnimation";
 import "./App.css";
 
 const App = () => {
@@ -15,6 +16,9 @@ const App = () => {
 
   return (
     <div className="app">
+      {/* Ocean Animation */}
+      <OceanAnimation />
+
       {/* Top Buttons */}
       <div className="top-buttons">
         <button

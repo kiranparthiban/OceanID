@@ -159,6 +159,7 @@ html,
   padding: 20px;
   flex-direction: column;
   margin-top: 0px;
+  margin-bottom: 400px;
   margin-right: 1100px;
   z-index: 5;
 }
@@ -221,6 +222,37 @@ html,
   background-color: #388e3c;
 }
 
+.status-message {
+  margin-top: 15px;
+  font-size: 16px;
+  font-weight: bold;
+  color: black; /* Bold and black styling */
+  text-align: center;
+}
+
+/*summary*/
+.summary-container {
+  margin-top: 15px;
+  padding: 10px;
+  background-color: rgba(255, 255, 255, 0.9);
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.summary-container h4 {
+  margin: 0 0 5px;
+  font-size: 16px;
+  color: #333;
+}
+
+.summary-container p {
+  margin: 0;
+  font-size: 14px;
+  color: #555;
+}
+
+
 /* Delete History */
 .delete-container {
   position: absolute;
@@ -258,6 +290,37 @@ html,
 
 
 
+
+
+
+body {
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+  background-image: linear-gradient(0deg, #022244, #58c8da);
+  margin: 0;
+}
+
+.about {
+   width: 100%;
+   background-color: rgba(0, 0, 0, 0.2);
+   padding: 5px;
+   text-align: center;
+   font-size: 14px;
+   color: white;
+   font-family: sans-serif;
+   letter-spacing: 3px;
+   font-weight: 100;
+   opacity: 0.1;
+   bottom: 0;
+   position: absolute;
+} 
+
+.ocean {
+  position: relative;
+  width: 100vw;
+  height: 100vh;
+}
 
 
 

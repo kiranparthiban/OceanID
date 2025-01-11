@@ -5,10 +5,17 @@ const baseUrl = "http://127.0.0.1:8000/api"; // Backend base URL
 const Upload = ({ onSuccess }) => {
   const [file, setFile] = useState(null);
   const [statusMessage, setStatusMessage] = useState("");
+  const [summary, setSummary] = useState(""); // State for storing summary
+  const [previewImage, setPreviewImage] = useState(
+    "placeholder.jpeg" // Path to your placeholder image
+  );
 
   const handleFileChange = (e) => {
     const uploadedFile = e.target.files[0];
-    setFile(uploadedFile);
+    if (uploadedFile) {
+      setFile(uploadedFile);
+      setPreviewImage(URL.createObjectURL(uploadedFile)); // Set uploaded image as preview
+    }
   };
 
   const handleUpload = async () => {
@@ -34,10 +41,12 @@ const Upload = ({ onSuccess }) => {
       setStatusMessage(
         `Uploaded successfully! Class: ${data.class_name}, Confidence: ${data.confidence}`
       );
+      setSummary(data.summary); // Set the summary from the backend
       onSuccess(); // Notify App.jsx to refresh history
     } catch (error) {
       console.error("Error uploading image:", error);
       setStatusMessage("An error occurred while uploading the image.");
+      setSummary(""); // Clear summary on error
     }
   };
 
@@ -45,15 +54,11 @@ const Upload = ({ onSuccess }) => {
     <div className="main-content">
       <div className="upload-container">
         <div className="upload-preview">
-          {file ? (
-            <img
-              src={URL.createObjectURL(file)}
-              alt="Uploaded Preview"
-              className="uploaded-image"
-            />
-          ) : (
-            <p className="placeholder-text">Upload an image of a fish</p>
-          )}
+          <img
+            src={previewImage}
+            alt="Uploaded Preview"
+            className="uploaded-image"
+          />
         </div>
         <input
           type="file"
@@ -64,7 +69,15 @@ const Upload = ({ onSuccess }) => {
         <button className="upload-button" onClick={handleUpload}>
           Upload
         </button>
-        {statusMessage && <p className="status-message">{statusMessage}</p>}
+        {statusMessage && (
+          <p className="status-message">{statusMessage}</p>
+        )}
+        {summary && (
+          <div className="summary-container">
+            <h4>Summary:</h4>
+            <p>{summary}</p>
+          </div>
+        )}
       </div>
     </div>
   );
