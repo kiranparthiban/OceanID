@@ -10,3 +10,4 @@ react-router-dom
 djangorestframework
 wikipedia-api
 react-dom
+djangorestframework-simplejwt

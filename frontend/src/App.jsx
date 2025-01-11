@@ -1,8 +1,11 @@
 import React, { useState } from "react";
+import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
 import Upload from "./components/Upload";
 import History from "./components/History";
 import DeleteHistory from "./components/DeleteHistory";
 import OceanAnimation from "./components/OceanAnimation";
+import LoginPage from "./components/LoginPage";
+import SignupPage from "./components/SignupPage";
 import "./App.css";
 
 const App = () => {
@@ -15,10 +18,41 @@ const App = () => {
   };
 
   return (
-    <div className="app">
-      {/* Ocean Animation */}
-      <OceanAnimation />
+    <Router>
+      <div className="app">
+        {/* Ocean Animation */}
+        <OceanAnimation />
 
+        {/* Routes */}
+        <Routes>
+          {/* Base URL redirects to login */}
+          <Route path="/" element={<Navigate to="/login" />} />
+          <Route path="/login" element={<LoginPage />} />
+          <Route path="/signup" element={<SignupPage />} />
+          <Route path="/app" element={<AppContent
+            showHistory={showHistory}
+            setShowHistory={setShowHistory}
+            showDelete={showDelete}
+            setShowDelete={setShowDelete}
+            historyTrigger={historyTrigger}
+            handleUploadSuccess={handleUploadSuccess}
+          />} />
+        </Routes>
+      </div>
+    </Router>
+  );
+};
+
+const AppContent = ({
+  showHistory,
+  setShowHistory,
+  showDelete,
+  setShowDelete,
+  historyTrigger,
+  handleUploadSuccess,
+}) => {
+  return (
+    <>
       {/* Top Buttons */}
       <div className="top-buttons">
         <button
@@ -51,7 +85,7 @@ const App = () => {
         <Upload onSuccess={handleUploadSuccess} />
         {showDelete && <DeleteHistory />}
       </div>
-    </div>
+    </>
   );
 };
 
