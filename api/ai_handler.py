@@ -73,7 +73,12 @@ class AIHandler:
             dict: A dictionary containing the predicted class name and confidence score.
         """
         try:
-            input_tensor = self.transform(image).unsqueeze(0).to(self.device)  # Preprocess image
+            # Convert the image to RGB format (handles grayscale and RGBA images)
+            if image.mode != "RGB":
+                image = image.convert("RGB")
+
+            # Preprocess the image
+            input_tensor = self.transform(image).unsqueeze(0).to(self.device)
         except Exception as e:
             return {"error": f"Error processing image: {e}"}
 
