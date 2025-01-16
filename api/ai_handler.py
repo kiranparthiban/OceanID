@@ -4,7 +4,6 @@ import wikipediaapi
 from torchvision import transforms
 from PIL import Image
 
-
 class AIHandler:
     def __init__(self, model_path, class_to_idx_path):
         """
